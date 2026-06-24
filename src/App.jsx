@@ -1,5 +1,5 @@
-import { useState } from "react"
-import profileImg from "./assets/perfil.jpg"
+import { useState } from "react";
+import profileImg from "./assets/perfil.jpg";
 
 import {
   FaHtml5,
@@ -12,16 +12,25 @@ import {
   FaPython,
   FaVuejs,
   FaDocker,
-} from "react-icons/fa"
+} from "react-icons/fa";
 
 import {
   FaArrowUpRightFromSquare,
   FaEnvelope,
   FaMoon,
   FaSun,
-} from "react-icons/fa6"
+  FaBars,
+  FaXmark,
+} from "react-icons/fa6";
 
-import { SiTailwindcss, SiSupabase } from "react-icons/si"
+import { SiTailwindcss, SiSupabase } from "react-icons/si";
+
+const navLinks = [
+  { label: "Inicio", href: "#about" },
+  { label: "Proyectos", href: "#projects" },
+  { label: "Proceso", href: "#process" },
+  { label: "Contacto", href: "#contact" },
+];
 
 const technologies = [
   { name: "HTML5", icon: FaHtml5, color: "text-orange-600" },
@@ -36,7 +45,7 @@ const technologies = [
   { name: "Vue", icon: FaVuejs, color: "text-green-500" },
   { name: "Docker", icon: FaDocker, color: "text-sky-500" },
   { name: "Python", icon: FaPython, color: "text-blue-600" },
-]
+];
 
 const projects = [
   {
@@ -75,7 +84,7 @@ const projects = [
     stack: ["React", "SaaS", "Dashboard", "Productividad"],
     url: "https://workpilot-app.netlify.app/",
   },
-]
+];
 
 const process = [
   {
@@ -98,20 +107,21 @@ const process = [
     title: "Mejorar",
     text: "Itero detalles de diseño, rendimiento, usabilidad y consistencia para elevar el resultado.",
   },
-]
+];
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false)
+  const [darkMode, setDarkMode] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const pageClass = darkMode
     ? "dark min-h-screen bg-[#0A0F1A] text-[#E8EEF9] transition-colors duration-500"
-    : "min-h-screen bg-[#F7F3EA] text-[#172033] transition-colors duration-500"
+    : "min-h-screen bg-[#F7F3EA] text-[#172033] transition-colors duration-500";
 
-  const mutedText = darkMode ? "text-[#93A4BC]" : "text-[#647184]"
+  const mutedText = darkMode ? "text-[#93A4BC]" : "text-[#647184]";
 
   const cardClass = darkMode
     ? "border border-[#1E293B] bg-[#0F172A]/75"
-    : "border border-[#E7DDCD]/70 bg-[#FFFDF8]/75 shadow-sm"
+    : "border border-[#E7DDCD]/70 bg-[#FFFDF8]/75 shadow-sm";
 
   return (
     <main className={pageClass}>
@@ -136,13 +146,17 @@ function App() {
       <header
         className={
           darkMode
-            ? "fixed left-1/2 top-4 z-50 w-[92%] max-w-6xl -translate-x-1/2 rounded-2xl border border-[#1E293B] bg-[#0F172A]/80 px-5 py-3 backdrop-blur-xl"
-            : "fixed left-1/2 top-4 z-50 w-[92%] max-w-6xl -translate-x-1/2 rounded-2xl border border-[#E7DDCD]/80 bg-[#FFFDF8]/80 px-5 py-3 shadow-sm backdrop-blur-xl"
+            ? "fixed left-1/2 top-3 z-50 w-[94%] max-w-6xl -translate-x-1/2 rounded-2xl border border-[#1E293B] bg-[#0F172A]/85 px-4 py-3 backdrop-blur-xl sm:top-4 sm:w-[92%] sm:px-5"
+            : "fixed left-1/2 top-3 z-50 w-[94%] max-w-6xl -translate-x-1/2 rounded-2xl border border-[#E7DDCD]/80 bg-[#FFFDF8]/85 px-4 py-3 shadow-sm backdrop-blur-xl sm:top-4 sm:w-[92%] sm:px-5"
         }
       >
-        <nav className="flex items-center justify-between gap-4">
-          <a href="#about" className="flex flex-col leading-none">
-            <span className="text-[15px] font-extrabold tracking-tight md:text-[16px]">
+        <nav className="relative flex items-center justify-between gap-3">
+          <a
+            href="#about"
+            onClick={() => setMenuOpen(false)}
+            className="flex min-w-0 flex-col leading-none"
+          >
+            <span className="truncate text-[14px] font-extrabold tracking-tight sm:text-[16px]">
               Bruno Díaz S
               <span className="text-teal-700 dark:text-cyan-400">.</span>
             </span>
@@ -150,67 +164,118 @@ function App() {
             <span
               className={
                 darkMode
-                  ? "mt-1 text-[11px] font-medium text-[#93A4BC]"
-                  : "mt-1 text-[11px] font-medium text-[#647184]"
+                  ? "mt-1 hidden text-[11px] font-medium text-[#93A4BC] sm:block"
+                  : "mt-1 hidden text-[11px] font-medium text-[#647184] sm:block"
               }
             >
               Frontend · Web · Automatización
             </span>
           </a>
 
-          <div className="hidden items-center gap-6 text-sm font-bold md:flex">
-            <a href="#about" className="opacity-70 transition hover:opacity-100">
-              Inicio
-            </a>
-            <a href="#projects" className="opacity-70 transition hover:opacity-100">
-              Proyectos
-            </a>
-            <a href="#process" className="opacity-70 transition hover:opacity-100">
-              Proceso
-            </a>
-            <a href="#contact" className="opacity-70 transition hover:opacity-100">
-              Contacto
-            </a>
+          <div className="hidden items-center gap-6 text-sm font-bold lg:flex">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="opacity-70 transition hover:opacity-100"
+              >
+                {link.label}
+              </a>
+            ))}
           </div>
 
-          <button
-            onClick={() => setDarkMode(!darkMode)}
-            aria-label={darkMode ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
-            className={
-              darkMode
-                ? "grid h-11 w-11 place-items-center rounded-xl border border-[#243244] bg-[#111C2F] text-cyan-300 transition hover:scale-105 hover:bg-[#162339]"
-                : "grid h-11 w-11 place-items-center rounded-xl border border-[#DCCFBA] bg-white/70 text-teal-700 transition hover:scale-105 hover:bg-white"
-            }
-          >
-            {darkMode ? <FaSun className="text-lg" /> : <FaMoon className="text-lg" />}
-          </button>
-        </nav>
-      </header>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setDarkMode(!darkMode)}
+              aria-label={
+                darkMode ? "Cambiar a modo claro" : "Cambiar a modo oscuro"
+              }
+              className={
+                darkMode
+                  ? "grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-[#243244] bg-[#111C2F] text-cyan-300 transition hover:scale-105 hover:bg-[#162339] sm:h-11 sm:w-11"
+                  : "grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-[#DCCFBA] bg-white/70 text-teal-700 transition hover:scale-105 hover:bg-white sm:h-11 sm:w-11"
+              }
+            >
+              {darkMode ? (
+                <FaSun className="text-base sm:text-lg" />
+              ) : (
+                <FaMoon className="text-base sm:text-lg" />
+              )}
+            </button>
 
-      <section id="about" className="relative overflow-hidden px-6 pt-28">
-        <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 pb-16 pt-12 md:grid-cols-12 md:gap-10 md:pt-20">
-          <div className="md:col-span-7">
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
+              className={
+                darkMode
+                  ? "grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-[#243244] bg-[#111C2F] text-[#E8EEF9] transition hover:scale-105 hover:bg-[#162339] lg:hidden"
+                  : "grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-[#DCCFBA] bg-white/70 text-[#172033] transition hover:scale-105 hover:bg-white lg:hidden"
+              }
+            >
+              {menuOpen ? (
+                <FaXmark className="text-lg" />
+              ) : (
+                <FaBars className="text-lg" />
+              )}
+            </button>
+          </div>
+
+          {menuOpen && (
             <div
               className={
                 darkMode
-                  ? "mb-6 inline-flex rounded-full border border-cyan-400/20 bg-white/5 px-4 py-2 text-xs font-bold text-cyan-300 shadow-sm backdrop-blur"
-                  : "mb-6 inline-flex rounded-full border border-teal-700/15 bg-white/50 px-4 py-2 text-xs font-bold text-teal-800 shadow-sm backdrop-blur"
+                  ? "absolute left-0 right-0 top-[calc(100%+0.75rem)] overflow-hidden rounded-2xl border border-[#1E293B] bg-[#0F172A]/95 p-2 shadow-[0_24px_70px_rgba(0,0,0,0.35)] backdrop-blur-xl lg:hidden"
+                  : "absolute left-0 right-0 top-[calc(100%+0.75rem)] overflow-hidden rounded-2xl border border-[#E7DDCD]/80 bg-[#FFFDF8]/95 p-2 shadow-[0_24px_70px_rgba(15,23,42,0.12)] backdrop-blur-xl lg:hidden"
+              }
+            >
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
+                  className={
+                    darkMode
+                      ? "flex rounded-xl px-4 py-3 text-sm font-bold text-[#E8EEF9] transition hover:bg-white/5"
+                      : "flex rounded-xl px-4 py-3 text-sm font-bold text-[#172033] transition hover:bg-[#F7F3EA]"
+                  }
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          )}
+        </nav>
+      </header>
+
+      <section
+        id="about"
+        className="relative overflow-hidden px-5 pt-28 sm:px-6"
+      >
+        <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 pb-14 pt-8 sm:gap-12 sm:pt-12 md:grid-cols-12 md:gap-10 md:pb-16 md:pt-20">
+          <div className="order-2 md:order-1 md:col-span-7">
+            <div
+              className={
+                darkMode
+                  ? "mb-5 inline-flex rounded-full border border-cyan-400/20 bg-white/5 px-4 py-2 text-xs font-bold text-cyan-300 shadow-sm backdrop-blur sm:mb-6"
+                  : "mb-5 inline-flex rounded-full border border-teal-700/15 bg-white/50 px-4 py-2 text-xs font-bold text-teal-800 shadow-sm backdrop-blur sm:mb-6"
               }
             >
               Web Developer · Ethical Hacking · IoT
             </div>
 
-            <p className="mb-4 text-base font-bold tracking-tight text-teal-700 dark:text-cyan-400 md:text-lg">
+            <p className="mb-3 text-base font-bold tracking-tight text-teal-700 dark:text-cyan-400 sm:mb-4 md:text-lg">
               Hola, soy Bruno.
             </p>
 
-            <h1 className="max-w-3xl text-[2.8rem] font-extrabold leading-[1.03] tracking-[-0.055em] text-[#172033] dark:text-[#E8EEF9] md:text-[4.7rem]">
+            <h1 className="max-w-3xl text-[2.45rem] font-extrabold leading-[1.02] tracking-[-0.055em] text-[#172033] dark:text-[#E8EEF9] min-[390px]:text-[2.7rem] sm:text-[3.4rem] md:text-[4.2rem] lg:text-[4.7rem]">
               Construyo el futuro,
               <br />
               una línea a la vez.
             </h1>
 
-            <p className={`mt-6 max-w-2xl text-base leading-8 md:text-lg ${mutedText}`}>
+            <p
+              className={`mt-5 max-w-2xl text-[15px] leading-7 sm:mt-6 sm:text-base sm:leading-8 md:text-lg ${mutedText}`}
+            >
               Construyo aplicaciones web por el día, exploro{" "}
               <strong className="font-bold text-[#172033] dark:text-[#E8EEF9]">
                 hacking ético
@@ -226,11 +291,11 @@ function App() {
               por las noches. Ingeniería en Informática de por medio.
             </p>
 
-            <p className="mt-5 max-w-xl text-base font-bold leading-7 text-teal-700 dark:text-cyan-400 md:text-lg">
+            <p className="mt-4 max-w-xl text-base font-bold leading-7 text-teal-700 dark:text-cyan-400 sm:mt-5 md:text-lg">
               Si se puede romper, lo voy a intentar.
             </p>
 
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+            <div className="mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:gap-4">
               <a
                 href="#projects"
                 className="rounded-2xl bg-teal-700 px-6 py-3 text-center text-sm font-bold text-white shadow-[0_18px_38px_rgba(15,118,110,0.22)] transition-all duration-300 hover:-translate-y-1 hover:bg-teal-800 dark:bg-cyan-400 dark:text-[#08111F] dark:hover:bg-cyan-300"
@@ -251,8 +316,8 @@ function App() {
             </div>
           </div>
 
-          <div className="flex justify-center md:col-span-5">
-            <div className="relative grid h-[19rem] w-[19rem] place-items-center sm:h-[23rem] sm:w-[23rem]">
+          <div className="order-1 flex justify-center md:order-2 md:col-span-5">
+            <div className="relative grid h-[17rem] w-[17rem] place-items-center sm:h-[20rem] sm:w-[20rem] md:h-[23rem] md:w-[23rem]">
               <div
                 className={
                   darkMode
@@ -268,8 +333,8 @@ function App() {
                 alt="Foto de perfil de Bruno"
                 className={
                   darkMode
-                    ? "relative h-60 w-60 rounded-full border-4 border-[#1E293B] object-cover object-center shadow-[0_30px_80px_rgba(34,211,238,0.14)] sm:h-72 sm:w-72"
-                    : "relative h-60 w-60 rounded-full border-4 border-white/70 object-cover object-center shadow-[0_30px_80px_rgba(15,118,110,0.16)] sm:h-72 sm:w-72"
+                    ? "relative h-52 w-52 rounded-full border-4 border-[#1E293B] object-cover object-center shadow-[0_30px_80px_rgba(34,211,238,0.14)] sm:h-64 sm:w-64 md:h-72 md:w-72"
+                    : "relative h-52 w-52 rounded-full border-4 border-white/70 object-cover object-center shadow-[0_30px_80px_rgba(15,118,110,0.16)] sm:h-64 sm:w-64 md:h-72 md:w-72"
                 }
               />
             </div>
@@ -285,7 +350,9 @@ function App() {
             }
           >
             <div className="mb-4 flex items-center justify-between gap-4">
-              <p className={`text-[11px] font-black uppercase tracking-[0.24em] ${mutedText}`}>
+              <p
+                className={`text-[11px] font-black uppercase tracking-[0.24em] ${mutedText}`}
+              >
                 Tecnologías
               </p>
 
@@ -298,9 +365,9 @@ function App() {
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+            <div className="grid grid-cols-1 gap-3 min-[420px]:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
               {technologies.map((tech) => {
-                const Icon = tech.icon
+                const Icon = tech.icon;
 
                 return (
                   <div
@@ -323,50 +390,55 @@ function App() {
 
                     <span>{tech.name}</span>
                   </div>
-                )
+                );
               })}
             </div>
           </div>
         </div>
       </section>
 
-      <section id="projects" className="relative mx-auto max-w-6xl px-6 py-24">
-        <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+      <section
+        id="projects"
+        className="relative mx-auto max-w-6xl px-5 py-16 sm:px-6 sm:py-20 md:py-24"
+      >
+        <div className="mb-10 flex flex-col justify-between gap-5 sm:mb-12 md:flex-row md:items-end md:gap-6">
           <div>
             <p className="text-sm font-black uppercase tracking-[0.35em] text-teal-700 dark:text-cyan-400">
               Proyectos
             </p>
 
-            <h2 className="mt-4 max-w-2xl text-4xl font-black tracking-tight md:text-5xl">
+            <h2 className="mt-4 max-w-2xl text-3xl font-black tracking-tight sm:text-4xl md:text-5xl">
               Aplicaciones, productos y soluciones digitales.
             </h2>
           </div>
 
-          <p className={`max-w-sm ${mutedText}`}>
+          <p className={`max-w-sm text-sm leading-7 sm:text-base ${mutedText}`}>
             Proyectos pensados desde la utilidad: automatización, operación,
             gestión y experiencias web claras.
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-5 sm:gap-6 lg:grid-cols-2">
           {projects.map((project) => (
             <article
               key={project.title}
-              className={`group rounded-[2rem] p-6 transition duration-300 hover:-translate-y-2 ${cardClass}`}
+              className={`group rounded-[1.75rem] p-5 transition duration-300 hover:-translate-y-2 sm:rounded-[2rem] sm:p-6 ${cardClass}`}
             >
               <div className="mb-6 flex items-start justify-between gap-4">
-                <span className="text-5xl font-black text-teal-700/20 dark:text-cyan-400/20">
+                <span className="text-4xl font-black text-teal-700/20 dark:text-cyan-400/20 sm:text-5xl">
                   {project.number}
                 </span>
 
-                <span className="rounded-full border border-teal-700/15 px-3 py-1 text-xs font-black text-teal-700 dark:border-cyan-400/20 dark:text-cyan-400">
+                <span className="rounded-full border border-teal-700/15 px-3 py-1 text-[11px] font-black text-teal-700 dark:border-cyan-400/20 dark:text-cyan-400 sm:text-xs">
                   {project.type}
                 </span>
               </div>
 
-              <h3 className="text-2xl font-black">{project.title}</h3>
+              <h3 className="text-xl font-black sm:text-2xl">
+                {project.title}
+              </h3>
 
-              <p className={`mt-4 leading-7 ${mutedText}`}>
+              <p className={`mt-4 text-sm leading-7 sm:text-base ${mutedText}`}>
                 {project.description}
               </p>
 
@@ -376,8 +448,8 @@ function App() {
                     key={item}
                     className={
                       darkMode
-                        ? "rounded-full border border-[#1E293B] bg-[#0A111F]/80 px-3 py-1 text-sm"
-                        : "rounded-full border border-[#E7DDCD] bg-[#F7F3EA]/80 px-3 py-1 text-sm"
+                        ? "rounded-full border border-[#1E293B] bg-[#0A111F]/80 px-3 py-1 text-xs sm:text-sm"
+                        : "rounded-full border border-[#E7DDCD] bg-[#F7F3EA]/80 px-3 py-1 text-xs sm:text-sm"
                     }
                   >
                     {item}
@@ -405,32 +477,35 @@ function App() {
         </div>
       </section>
 
-      <section id="process" className="relative mx-auto max-w-6xl px-6 py-24">
-        <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+      <section
+        id="process"
+        className="relative mx-auto max-w-6xl px-5 py-16 sm:px-6 sm:py-20 md:py-24"
+      >
+        <div className="mb-10 flex flex-col justify-between gap-5 sm:mb-12 md:flex-row md:items-end md:gap-6">
           <div>
             <p className="text-sm font-black uppercase tracking-[0.35em] text-teal-700 dark:text-cyan-400">
               Proceso
             </p>
 
-            <h2 className="mt-4 max-w-2xl text-4xl font-black tracking-tight md:text-5xl">
+            <h2 className="mt-4 max-w-2xl text-3xl font-black tracking-tight sm:text-4xl md:text-5xl">
               Del problema a una solución usable.
             </h2>
           </div>
 
-          <p className={`max-w-sm ${mutedText}`}>
+          <p className={`max-w-sm text-sm leading-7 sm:text-base ${mutedText}`}>
             Trabajo con una lógica simple: entender, diseñar, construir y
             mejorar. Sin perder de vista al usuario final.
           </p>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {process.map((item) => (
             <article
               key={item.number}
               className={
                 darkMode
-                  ? "group relative overflow-hidden rounded-[2rem] border border-[#1E293B] bg-[#0F172A]/80 p-6 transition duration-300 hover:-translate-y-2 hover:border-cyan-400/35 hover:bg-[#132036]"
-                  : "group relative overflow-hidden rounded-[2rem] border border-[#E7DDCD]/70 bg-[#FFFDF8]/75 p-6 shadow-sm transition duration-300 hover:-translate-y-2 hover:border-teal-200 hover:shadow-[0_18px_40px_rgba(15,118,110,0.10)]"
+                  ? "group relative overflow-hidden rounded-[1.75rem] border border-[#1E293B] bg-[#0F172A]/80 p-5 transition duration-300 hover:-translate-y-2 hover:border-cyan-400/35 hover:bg-[#132036] sm:rounded-[2rem] sm:p-6"
+                  : "group relative overflow-hidden rounded-[1.75rem] border border-[#E7DDCD]/70 bg-[#FFFDF8]/75 p-5 shadow-sm transition duration-300 hover:-translate-y-2 hover:border-teal-200 hover:shadow-[0_18px_40px_rgba(15,118,110,0.10)] sm:rounded-[2rem] sm:p-6"
               }
             >
               <div className="absolute -right-8 -top-8 h-24 w-24 rounded-full bg-teal-500/10 blur-2xl dark:bg-cyan-400/10" />
@@ -439,7 +514,7 @@ function App() {
                 {item.number}
               </span>
 
-              <h3 className="mt-8 text-2xl font-black tracking-tight">
+              <h3 className="mt-6 text-xl font-black tracking-tight sm:mt-8 sm:text-2xl">
                 {item.title}
               </h3>
 
@@ -451,25 +526,30 @@ function App() {
         </div>
       </section>
 
-      <section id="contact" className="relative mx-auto max-w-6xl px-6 py-24">
+      <section
+        id="contact"
+        className="relative mx-auto max-w-6xl px-5 py-16 sm:px-6 sm:py-20 md:py-24"
+      >
         <div
           className={
             darkMode
-              ? "overflow-hidden rounded-[2.5rem] border border-[#1E293B] bg-[#0F172A]/85 p-8 md:p-14"
-              : "overflow-hidden rounded-[2.5rem] border border-[#E7DDCD]/70 bg-[#FFFDF8]/80 p-8 shadow-[0_24px_70px_rgba(15,23,42,0.08)] md:p-14"
+              ? "overflow-hidden rounded-[2rem] border border-[#1E293B] bg-[#0F172A]/85 p-6 sm:rounded-[2.5rem] sm:p-8 md:p-14"
+              : "overflow-hidden rounded-[2rem] border border-[#E7DDCD]/70 bg-[#FFFDF8]/80 p-6 shadow-[0_24px_70px_rgba(15,23,42,0.08)] sm:rounded-[2.5rem] sm:p-8 md:p-14"
           }
         >
-          <div className="grid gap-10 md:grid-cols-[1.15fr_0.85fr] md:items-center">
+          <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
             <div>
               <p className="text-sm font-black uppercase tracking-[0.35em] text-teal-700 dark:text-cyan-400">
                 Contacto
               </p>
 
-              <h2 className="mt-5 max-w-2xl text-4xl font-black tracking-tight md:text-5xl">
+              <h2 className="mt-4 max-w-2xl text-3xl font-black tracking-tight sm:text-4xl md:mt-5 md:text-5xl">
                 ¿Tienes una idea? Construyamos algo útil.
               </h2>
 
-              <p className={`mt-5 max-w-2xl leading-8 ${mutedText}`}>
+              <p
+                className={`mt-5 max-w-2xl text-sm leading-7 sm:text-base sm:leading-8 ${mutedText}`}
+              >
                 Disponible para colaborar en proyectos web, prototipos,
                 automatizaciones, dashboards o soluciones digitales con foco en
                 usuarios reales.
@@ -479,16 +559,16 @@ function App() {
             <div
               className={
                 darkMode
-                  ? "rounded-[2rem] border border-[#1E293B] bg-[#0A111F]/85 p-5"
-                  : "rounded-[2rem] border border-[#E7DDCD]/70 bg-[#F7F3EA]/80 p-5"
+                  ? "rounded-[1.75rem] border border-[#1E293B] bg-[#0A111F]/85 p-4 sm:rounded-[2rem] sm:p-5"
+                  : "rounded-[1.75rem] border border-[#E7DDCD]/70 bg-[#F7F3EA]/80 p-4 sm:rounded-[2rem] sm:p-5"
               }
             >
               <a
                 href="mailto:correo@ejemplo.com"
                 className={
                   darkMode
-                    ? "flex items-center justify-center gap-3 rounded-2xl bg-cyan-400 px-7 py-4 text-center font-black text-[#08111F] transition hover:-translate-y-1 hover:bg-cyan-300"
-                    : "flex items-center justify-center gap-3 rounded-2xl bg-teal-700 px-7 py-4 text-center font-black text-white shadow-[0_18px_38px_rgba(15,118,110,0.22)] transition hover:-translate-y-1 hover:bg-teal-800"
+                    ? "flex items-center justify-center gap-3 rounded-2xl bg-cyan-400 px-6 py-4 text-center text-sm font-black text-[#08111F] transition hover:-translate-y-1 hover:bg-cyan-300 sm:text-base"
+                    : "flex items-center justify-center gap-3 rounded-2xl bg-teal-700 px-6 py-4 text-center text-sm font-black text-white shadow-[0_18px_38px_rgba(15,118,110,0.22)] transition hover:-translate-y-1 hover:bg-teal-800 sm:text-base"
                 }
               >
                 <FaEnvelope />
@@ -501,15 +581,15 @@ function App() {
                 rel="noreferrer"
                 className={
                   darkMode
-                    ? "mt-4 flex items-center justify-center gap-3 rounded-2xl border border-[#1E293B] px-7 py-4 text-center font-black text-[#E8EEF9] transition hover:-translate-y-1 hover:border-cyan-400/35 hover:bg-white/5"
-                    : "mt-4 flex items-center justify-center gap-3 rounded-2xl border border-[#E7DDCD] bg-white/40 px-7 py-4 text-center font-black text-[#172033] transition hover:-translate-y-1 hover:bg-white"
+                    ? "mt-4 flex items-center justify-center gap-3 rounded-2xl border border-[#1E293B] px-6 py-4 text-center text-sm font-black text-[#E8EEF9] transition hover:-translate-y-1 hover:border-cyan-400/35 hover:bg-white/5 sm:text-base"
+                    : "mt-4 flex items-center justify-center gap-3 rounded-2xl border border-[#E7DDCD] bg-white/40 px-6 py-4 text-center text-sm font-black text-[#172033] transition hover:-translate-y-1 hover:bg-white sm:text-base"
                 }
               >
                 <FaGithub />
                 Ver GitHub
               </a>
 
-              <p className={`mt-5 text-center text-sm ${mutedText}`}>
+              <p className={`mt-5 text-center text-xs sm:text-sm ${mutedText}`}>
                 Respondo proyectos, ideas y colaboraciones.
               </p>
             </div>
@@ -520,14 +600,14 @@ function App() {
       <footer
         className={
           darkMode
-            ? "relative border-t border-[#1E293B] px-6 py-8 text-center text-sm text-[#93A4BC]"
-            : "relative border-t border-[#E7DDCD] px-6 py-8 text-center text-sm text-[#647184]"
+            ? "relative border-t border-[#1E293B] px-5 py-8 text-center text-xs text-[#93A4BC] sm:px-6 sm:text-sm"
+            : "relative border-t border-[#E7DDCD] px-5 py-8 text-center text-xs text-[#647184] sm:px-6 sm:text-sm"
         }
       >
         © 2026 Bruno Díaz S — Portfolio desarrollado con React y Tailwind CSS.
       </footer>
     </main>
-  )
+  );
 }
 
-export default App
+export default App;
