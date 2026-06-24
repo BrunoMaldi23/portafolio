@@ -123,6 +123,7 @@ function App() {
               : "absolute right-0 top-16 h-96 w-96 rounded-full bg-teal-400/20 blur-[120px]"
           }
         />
+
         <div
           className={
             darkMode
@@ -140,11 +141,12 @@ function App() {
         }
       >
         <nav className="flex items-center justify-between gap-4">
-          <a href="#" className="flex flex-col leading-none">
+          <a href="#about" className="flex flex-col leading-none">
             <span className="text-[15px] font-extrabold tracking-tight md:text-[16px]">
               Bruno Díaz S
               <span className="text-teal-700 dark:text-cyan-400">.</span>
             </span>
+
             <span
               className={
                 darkMode
@@ -157,6 +159,9 @@ function App() {
           </a>
 
           <div className="hidden items-center gap-6 text-sm font-bold md:flex">
+            <a href="#about" className="opacity-70 transition hover:opacity-100">
+              Inicio
+            </a>
             <a href="#projects" className="opacity-70 transition hover:opacity-100">
               Proyectos
             </a>
@@ -182,7 +187,7 @@ function App() {
         </nav>
       </header>
 
-      <section className="relative overflow-hidden px-6 pt-28">
+      <section id="about" className="relative overflow-hidden px-6 pt-28">
         <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 pb-16 pt-12 md:grid-cols-12 md:gap-10 md:pt-20">
           <div className="md:col-span-7">
             <div
@@ -255,7 +260,9 @@ function App() {
                     : "absolute inset-8 rounded-full bg-teal-400/20 blur-[80px]"
                 }
               />
+
               <div className="profile-ring absolute inset-5 rounded-full p-[2px]" />
+
               <img
                 src={profileImg}
                 alt="Foto de perfil de Bruno"
@@ -281,6 +288,7 @@ function App() {
               <p className={`text-[11px] font-black uppercase tracking-[0.24em] ${mutedText}`}>
                 Tecnologías
               </p>
+
               <span
                 className={
                   darkMode
@@ -312,6 +320,7 @@ function App() {
                     >
                       <Icon className={`text-2xl ${tech.color}`} />
                     </span>
+
                     <span>{tech.name}</span>
                   </div>
                 )
@@ -327,6 +336,7 @@ function App() {
             <p className="text-sm font-black uppercase tracking-[0.35em] text-teal-700 dark:text-cyan-400">
               Proyectos
             </p>
+
             <h2 className="mt-4 max-w-2xl text-4xl font-black tracking-tight md:text-5xl">
               Aplicaciones, productos y soluciones digitales.
             </h2>
@@ -401,6 +411,7 @@ function App() {
             <p className="text-sm font-black uppercase tracking-[0.35em] text-teal-700 dark:text-cyan-400">
               Proceso
             </p>
+
             <h2 className="mt-4 max-w-2xl text-4xl font-black tracking-tight md:text-5xl">
               Del problema a una solución usable.
             </h2>
